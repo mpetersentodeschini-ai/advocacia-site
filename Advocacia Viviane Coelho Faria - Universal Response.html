@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<!-- Optimized viewport for iPhones with Notch/Dynamic Island & Android devices -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d1422">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Advocacia Viviane Coelho Faria</title>
+
+<!-- Font Loading -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* CSS Variables & Design Tokens */
+:root {
+  --gold: #c9a45c;
+  --gold-dark: #a8833d;
+  --gold-light: #f3e7ca;
+  --dark-bg: #0d1422;
+  --dark-accent: #1e293b;
+  --body-bg: #f8f6f2;
+  --card-bg: #ffffff;
+  --text-primary: #0f172a;
+  --text-muted: #64748b;
+  --border-light: #e2e8f0;
+  --shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 10px 25px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 20px 40px rgba(15, 23, 42, 0.15);
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --transition-speed: 0.3s;
+}
+
+/* Global Reset & Base Styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--body-bg);
+  color: var(--text-primary);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  /* Support for iOS Safe Area Insets (Notch / Home Bar) */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+header {
+  background: linear-gradient(135deg, #0d1422, #1e293b);
+  color: #ffffff;
+  padding-top: calc(16px + env(safe-area-inset-top));
+  padding-bottom: 16px;
+  padding-left: max(20px, env(safe-area-inset-left));
+  padding-right: max(20px, env(safe-area-inset-right));
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  transition: padding var(--transition-speed);
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo h1 {
+  font-size: clamp(17px, 4vw, 22px);
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+}
+
+.logo p {
+  color: #94a3b8;
+  font-size: clamp(11px, 2.8vw, 13px);
+  font-weight: 400;
+  margin-top: 2px;
+}
+
+.header-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #25d366;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  min-height: 48px; /* Touch target minimum */
+  min-width: 48px;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.header-cta:hover, .header-cta:focus-visible {
+  background: #20ba5a;
+  transform: translateY(-2px);
+}
+
+.container {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 24px 16px calc(32px + env(safe-area-inset-bottom));
+  flex: 1;
+}
+
+/* View Navigation System (SPA) */
+.view {
+  display: none;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.view.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 20px 8px 32px;
+}
+
+.badge {
+  display: inline-block;
+  color: #785a1e;
+  background: var(--gold-light);
+  border: 1px solid #e2cb92;
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.hero h2 {
+  font-size: clamp(26px, 5.5vw, 44px);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 16px 0 12px;
+  line-height: 1.2;
+}
+
+.hero p {
+  max-width: 680px;
+  margin: 0 auto;
+  color: var(--text-muted);
+  font-size: clamp(14px, 2.2vw, 17px);
+  line-height: 1.65;
+}
+
+/* Practice Area Selection Grid */
+.area-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  max-width: 960px;
+  margin: 12px auto 32px;
+}
+
+.area-card {
+  position: relative;
+  min-height: 310px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  color: #ffffff;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-shadow: var(--shadow-lg);
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  touch-action: manipulation;
+}
+
+.area-card:hover, .area-card:focus-visible {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.22);
+}
+
+.family-bg {
+  background: linear-gradient(180deg, rgba(13, 20, 34, 0.2) 0%, rgba(13, 20, 34, 0.92) 100%), 
+              url("https://images.unsplash.com/photo-1609220136736-443140cffec6?auto=format&fit=crop&w=1200&q=85") center/cover no-repeat;
+}
+
+.work-bg {
+  background: linear-gradient(180deg, rgba(13, 20, 34, 0.2) 0%, rgba(13, 20, 34, 0.92) 100%), 
+              url("https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1200&q=85") center/cover no-repeat;
+}
+
+.area-card h3 {
+  font-size: clamp(22px, 4.5vw, 28px);
+  font-weight: 800;
+  margin: 10px 0 6px;
+}
+
+.area-card p {
+  color: #f1f5f9;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.btn-enter {
+  margin-top: 8px;
+  background: var(--gold);
+  color: #0d1422;
+  border: 0;
+  border-radius: var(--radius-md);
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 800;
+  width: max-content;
+  min-height: 48px; /* Touch friendly minimum height */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-enter:hover {
+  background: var(--gold-dark);
+  color: #ffffff;
+}
+
+.btn-back {
+  border: 0;
+  background: #e2e8f0;
+  color: var(--text-primary);
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 20px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s ease;
+  touch-action: manipulation;
+}
+
+.btn-back:hover, .btn-back:focus-visible {
+  background: #cbd5e1;
+}
+
+.section-head {
+  border-radius: var(--radius-lg);
+  padding: 32px 24px;
+  color: #ffffff;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-md);
+}
+
+.section-head.family-head {
+  background: linear-gradient(135deg, #3d2e1d, #8f6e3a);
+}
+
+.section-head.work-head {
+  background: linear-gradient(135deg, #0d1422, #2c3b52);
+}
+
+.section-head h2 {
+  font-size: clamp(24px, 4.5vw, 34px);
+  font-weight: 800;
+}
+
+.section-head p {
+  margin-top: 6px;
+  color: #e2e8f0;
+  font-size: clamp(14px, 2vw, 16px);
+}
+
+/* Practice Cards Grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.card-item {
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.card-item h4 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-item p {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.panel {
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  margin-top: 24px;
+}
+
+.panel h3 {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.faq details {
+  border-bottom: 1px solid var(--border-light);
+  padding: 14px 0;
+}
+
+.faq details:last-child {
+  border-bottom: none;
+}
+
+.faq summary {
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  color: var(--text-primary);
+  padding: 6px 0;
+  user-select: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 44px;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary::after {
+  content: "＋";
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--gold-dark);
+  margin-left: 12px;
+  transition: transform 0.2s ease;
+}
+
+.faq details[open] summary::after {
+  content: "－";
+}
+
+.faq p {
+  padding: 8px 4px 12px;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.contact-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.muted-info {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.home-note {
+  text-align: center;
+  color: var(--text-muted);
+  margin: 20px 0 10px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.whatsapp-float {
+  position: fixed;
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  right: calc(20px + env(safe-area-inset-right));
+  background: #25d366;
+  color: #ffffff;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  text-decoration: none;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  touch-action: manipulation;
+}
+
+.whatsapp-float:hover, .whatsapp-float:focus-visible {
+  transform: scale(1.1);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+}
+
+
+/* Breakpoint 1: Small Screens / Foldables / iPhone SE (<= 380px) */
+@media (max-width: 380px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+  .header-cta {
+    width: 100%;
+  }
+  .area-card {
+    min-height: 280px;
+    padding: 20px 16px;
+  }
+  .btn-enter, .btn-back {
+    width: 100%;
+  }
+}
+
+/* Breakpoint 2: Mid-size Smartphones (381px - 600px) */
+@media (max-width: 600px) {
+  .contact-panel {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  .contact-panel .header-cta {
+    width: 100%;
+  }
+}
+
+/* Breakpoint 3: Tablets Vertical / iPads (601px - 834px) */
+@media (min-width: 601px) {
+  .area-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Breakpoint 4: Tablets Horizontal / iPads Pro / Laptops (835px - 1024px) */
+@media (min-width: 835px) {
+  .container {
+    padding: 36px 24px calc(40px + env(safe-area-inset-bottom));
+  }
+  .hero {
+    padding-top: 32px;
+  }
+}
+
+/* Breakpoint 5: Large Desktop Monitors (> 1025px) */
+@media (min-width: 1025px) {
+  header {
+    padding-left: max(40px, env(safe-area-inset-left));
+    padding-right: max(40px, env(safe-area-inset-right));
+  }
+  .cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .area-card {
+    min-height: 350px;
+  }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <h1>⚖️ Advocacia Viviane Coelho Faria</h1>
+    <p>Atendimento jurídico especializado</p>
+  </div>
+  <a class="header-cta" href="https://wa.me/5512982294355?text=Ol%C3%A1%2C%20Dra.%20Viviane!%20Gostaria%20de%20iniciar%20um%20atendimento." target="_blank" rel="noopener" id="mainHeaderWhatsapp">
+    💬 WhatsApp
+  </a>
+</header>
+
+<main class="container">
+
+  <section id="home" class="view active" aria-label="Página Inicial">
+    <div class="hero">
+      <span class="badge">Atendimento Premium</span>
+      <h2>Como podemos ajudar?</h2>
+      <p>Escolha a área da advocacia para acessar informações, orientações e serviços específicos. Cada ambiente foi pensado para você encontrar somente o conteúdo que procura.</p>
+    </div>
+
+    <div class="area-grid">
+      <div class="area-card family-bg" onclick="showView('family')" role="button" tabindex="0" aria-label="Acessar Advocacia Familiar">
+        <span class="badge">Direito de Família</span>
+        <h3>👨‍👩‍👧 Advocacia Familiar</h3>
+        <p>Orientação para questões familiares com atendimento individualizado e acolhedor.</p>
+        <button class="btn-enter" tabindex="-1">Entrar em Família →</button>
+      </div>
+
+      <div class="area-card work-bg" onclick="showView('work')" role="button" tabindex="0" aria-label="Acessar Advocacia Trabalhista">
+        <span class="badge">Direito do Trabalho</span>
+        <h3>⚖️️ Advocacia Trabalhista</h3>
+        <p>Informações e orientação para relações de trabalho, contratos e direitos.</p>
+        <button class="btn-enter" tabindex="-1">Entrar em Trabalhista →</button>
+      </div>
+    </div>
+
+    <p class="home-note">
+      <span>🔒</span> Conteúdo organizado por área para uma navegação simples, discreta e profissional.
+    </p>
+  </section>
+
+  <section id="family" class="view" aria-label="Direito de Família">
+    <button class="btn-back" onclick="showView('home')">← Voltar à tela inicial</button>
+    
+    <div class="section-head family-head">
+      <h2>👨‍👩‍👧 Advocacia Familiar</h2>
+      <p>Conteúdo exclusivo de Direito de Família</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card-item">
+        <h4>💍 Divórcio</h4>
+        <p>Orientação sobre divórcio, dissolução do vínculo e questões relacionadas.</p>
+      </div>
+      <div class="card-item">
+        <h4>👨‍👩‍👧 Guarda</h4>
+        <p>Informações sobre guarda, convivência e responsabilidades parentais.</p>
+      </div>
+      <div class="card-item">
+        <h4>💰 Pensão Alimentícia</h4>
+        <p>Orientação sobre pensão alimentícia e suas questões jurídicas.</p>
+      </div>
+      <div class="card-item">
+        <h4>🏠 Partilha de Bens</h4>
+        <p>Informações sobre divisão de bens em situações familiares.</p>
+      </div>
+      <div class="card-item">
+        <h4>📜 Inventário</h4>
+        <p>Orientação jurídica para organização e regularização da sucessão.</p>
+      </div>
+    </div>
+
+    <div class="panel faq">
+      <h3>❓ Perguntas Frequentes — Família</h3>
+      <details>
+        <summary>Como funciona o divórcio?</summary>
+        <p>O procedimento depende das circunstâncias do casal e da existência de consenso e outras questões familiares.</p>
+      </details>
+      <details>
+        <summary>Como é definida a guarda dos filhos?</summary>
+        <p>A definição considera o melhor interesse da criança e as circunstâncias da família.</p>
+      </details>
+      <details>
+        <summary>Quem pode pedir pensão alimentícia?</summary>
+        <p>A análise depende da relação familiar e das necessidades e possibilidades envolvidas.</p>
+      </details>
+      <details>
+        <summary>O que entra na partilha de bens?</summary>
+        <p>Depende do regime de bens adotado e das circunstâncias específicas de cada caso.</p>
+      </details>
+    </div>
+
+    <div class="panel contact-panel">
+      <div>
+        <h3>💬 Atendimento Família</h3>
+        <p class="muted-info">Fale diretamente com a Dra. Viviane Faria.</p>
+      </div>
+      <a class="header-cta" href="https://wa.me/5512982294355?text=Ol%C3%A1%2C%20Dra.%20Viviane!%20Gostaria%20de%20atendimento%20na%20%C3%A1rea%20de%20Fam%C3%ADlia." target="_blank" rel="noopener">
+        WhatsApp da Dra. Viviane
+      </a>
+    </div>
+  </section>
+
+  <section id="work" class="view" aria-label="Direito do Trabalho">
+    <button class="btn-back" onclick="showView('home')">← Voltar à tela inicial</button>
+    
+    <div class="section-head work-head">
+      <h2>⚖️ Advocacia Trabalhista</h2>
+      <p>Conteúdo exclusivo de Direito do Trabalho</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card-item">
+        <h4>📄 Rescisão Contratual</h4>
+        <p>Orientação sobre encerramento do contrato e verbas rescisórias.</p>
+      </div>
+      <div class="card-item">
+        <h4>⏱️ Horas Extras</h4>
+        <p>Informações sobre jornada, horas extras e seus reflexos.</p>
+      </div>
+      <div class="card-item">
+        <h4>📝 Contrato de Trabalho</h4>
+        <p>Orientação sobre contratos e relações de trabalho.</p>
+      </div>
+      <div class="card-item">
+        <h4>⚖️ Direitos Trabalhistas</h4>
+        <p>Conheça situações e direitos que podem envolver a relação de emprego.</p>
+      </div>
+      <div class="card-item">
+        <h4>🤝 Acordos Trabalhistas</h4>
+        <p>Orientação jurídica em negociações e acordos trabalhistas.</p>
+      </div>
+    </div>
+
+    <div class="panel faq">
+      <h3>❓ Perguntas Frequentes — Trabalhista</h3>
+      <details>
+        <summary>Quais verbas podem existir na rescisão?</summary>
+        <p>As verbas dependem do tipo de desligamento, contrato e demais circunstâncias do caso.</p>
+      </details>
+      <details>
+        <summary>Quando horas extras podem ser devidas?</summary>
+        <p>A análise depende da jornada efetivamente realizada, controles de ponto e regras aplicáveis.</p>
+      </details>
+      <details>
+        <summary>Por que analisar o contrato de trabalho?</summary>
+        <p>O contrato ajuda a identificar as condições pactuadas e os direitos e deveres envolvidos.</p>
+      </details>
+      <details>
+        <summary>É possível fazer um acordo trabalhista?</summary>
+        <p>Existem diferentes formas de composição, que devem ser analisadas juridicamente antes da formalização.</p>
+      </details>
+    </div>
+
+    <div class="panel contact-panel">
+      <div>
+        <h3>💬 Atendimento Trabalhista</h3>
+        <p class="muted-info">Fale diretamente com a Dra. Viviane Faria.</p>
+      </div>
+      <a class="header-cta" href="https://wa.me/5512982294355?text=Ol%C3%A1%2C%20Dra.%20Viviane!%20Gostaria%20de%20atendimento%20na%20%C3%A1rea%20Trabalhista." target="_blank" rel="noopener">
+        WhatsApp da Dra. Viviane
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<a href="https://wa.me/5512982294355?text=Ol%C3%A1%2C%20Dra.%20Viviane!%20Gostaria%20de%20tirar%20uma%20d%C3%BAvida." class="whatsapp-float" target="_blank" rel="noopener" id="floatWhatsappBtn" title="Falar no WhatsApp" aria-label="Contato via WhatsApp">
+  💬
+</a>
+
+<script>
+/**
+ * SPA View Switcher Function
+ * Handles view switching, smooth scroll reset, and updates WhatsApp floating CTA contextually.
+ */
+function showView(viewId) {
+  const views = document.querySelectorAll('.view');
+  
+  views.forEach(v => {
+    v.classList.remove('active');
+  });
+
+  const targetView = document.getElementById(viewId);
+  if (targetView) {
+    targetView.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    updateFloatingWhatsappLink(viewId);
+  }
+}
+
+/**
+ * Updates floating WhatsApp button text contextually based on active section
+ */
+function updateFloatingWhatsappLink(currentView) {
+  const floatBtn = document.getElementById('floatWhatsappBtn');
+  if (!floatBtn) return;
+
+  if (currentView === 'family') {
+    floatBtn.href = "https://wa.me/5512982294355?text=Ol%C3%A1%2C%20Dra.%20Viviane!%20Gostaria%20de%20atendimento%20na%20%C3%A1rea%20de%20Fam%C3%ADlia.";
+  } else if (currentView === 'work') {
+    floatBtn.href = "https://wa.me/5512982294355?text=Ol%C3%A1%2C%20Dra.%20Viviane!%20Gostaria%20de%20atendimento%20na%20%C3%A1rea%20Trabalhista.";
+  } else {
+    floatBtn.href = "https://wa.me/5512982294355?text=Ol%C3%A1%2C%20Dra.%20Viviane!%20Gostaria%20de%20iniciar%20um%20atendimento.";
+  }
+}
+
+// Enable keyboard navigation for touch areas (Space & Enter)
+document.addEventListener('DOMContentLoaded', () => {
+  const interactiveCards = document.querySelectorAll('.area-card[tabindex="0"]');
+  interactiveCards.forEach(card => {
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        card.click();
+      }
+    });
+  });
+});
+</script>
+
+</body>
+</html>
